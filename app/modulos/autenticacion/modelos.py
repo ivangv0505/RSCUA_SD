@@ -2,10 +2,9 @@ from typing import Optional, List, TYPE_CHECKING
 from sqlmodel import SQLModel, Field, Relationship
 from datetime import datetime
 
-# Importamos TYPE_CHECKING para evitar ciclos de importación
 if TYPE_CHECKING:
     from app.modulos.publicaciones.modelos import Publicacion
-    from app.modulos.eventos.modelos import Evento  # <--- IMPORTANTE
+    from app.modulos.eventos.modelos import Evento
 
 class UsuarioBase(SQLModel):
     nombre: str
@@ -22,10 +21,7 @@ class Usuario(UsuarioBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     password: str
     
-    # Relaciones
     publicaciones: List["Publicacion"] = Relationship(back_populates="usuario")
-    
-    # --- ESTA ES LA LÍNEA QUE FALTABA Y ROMPÍA TODO ---
     eventos: List["Evento"] = Relationship(back_populates="organizador") 
 
 class UsuarioCreate(UsuarioBase):

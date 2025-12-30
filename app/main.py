@@ -14,6 +14,7 @@ from app.modulos.mensajeria.socket import sio
 from app.modulos.directorios.rutas import router as dir_router
 from app.modulos.mensajeria.rutas import router as chat_router
 from app.modulos.notificaciones.rutas import router as noti_router
+from app.modulos.configuracion.rutas import router as config_router # NUEVO
 
 current_file_path = os.path.dirname(os.path.abspath(__file__))
 project_root = os.path.dirname(current_file_path)
@@ -45,6 +46,7 @@ app.include_router(events_router, prefix="/eventos", tags=["Eventos"])
 app.include_router(dir_router, prefix="/directorios", tags=["Servicio de Nombres"])
 app.include_router(chat_router, prefix="/chat", tags=["Mensajería"])
 app.include_router(noti_router, prefix="/notificaciones", tags=["Notificaciones"])
+app.include_router(config_router, prefix="/configuracion", tags=["Configuración"]) # NUEVO
 
 if os.path.exists(static_path):
     app.mount("/ui", StaticFiles(directory=static_path, html=True), name="static")

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Evento</title>
+    <link rel="stylesheet" href="css/HeaderStyle.css">
+    <style>
+        body { font-family: Arial, sans-serif; padding-top: 80px; background: #fafafa; }
+        .form-container { max-width: 600px; margin: 20px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+        .btn-submit { width: 100%; padding: 12px; background: #28a745; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; }
+        .btn-submit:hover { background: #218838; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">RSCUA</div>
+        <nav><a href="eventos.html">Volver</a></nav>
+    </header>
+
+    <div class="form-container">
+        <h2>Nuevo Evento</h2>
+        <form onsubmit="alert('Evento creado (Simulación)'); return false;">
+            <div class="form-group"><label>Título</label><input type="text" required></div>
+            <div class="form-group"><label>Fecha</label><input type="date" required></div>
+            <div class="form-group"><label>Ubicación</label><input type="text" required></div>
+            <div class="form-group">
+                <label>Tipo</label>
+                <select><option>Singular</option><option>Grupal</option><option>Masivo</option></select>
+            </div>
+            <div class="form-group"><label>Descripción</label><textarea rows="4"></textarea></div>
+            <button type="submit" class="btn-submit">Publicar Evento</button>
+        </form>
+    </div>
+</body>
+</html>

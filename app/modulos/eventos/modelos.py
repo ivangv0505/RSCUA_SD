@@ -10,6 +10,8 @@ class EventoBase(SQLModel):
     descripcion: str
     fecha: datetime
     lugar: str
+    tipo: str
+    categoria: str
     imagen_url: Optional[str] = None
 
 class Evento(EventoBase, table=True):
@@ -17,12 +19,7 @@ class Evento(EventoBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     organizador_id: int = Field(foreign_key="usuarios.id")
     
-    # Relación inversa
     organizador: Optional["Usuario"] = Relationship(back_populates="eventos")
 
 class EventoCreate(EventoBase):
     pass
-
-class EventoRead(EventoBase):
-    id: int
-    organizador_id: int

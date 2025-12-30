@@ -1,0 +1,15 @@
+
+body { font-family: Arial, sans-serif; background-color: #f9f9f9; margin: 0; padding-top: 80px; }
+.comunidades { margin: 20px auto; max-width: 900px; padding: 20px; }
+.comunidad-item {
+    display: flex; justify-content: space-between; align-items: center;
+    background: white; padding: 15px; margin-bottom: 15px;
+    border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+.comunidad-item:hover { transform: scale(1.01); }
+.acciones button {
+    padding: 8px 15px; margin-left: 10px; border: none; border-radius: 5px;
+    cursor: pointer; background-color: #0095f6; color: white;
+}
+.acciones button:last-child { background-color: #ccc; color: black; }
