@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+sqlmodel
+asyncpg
+python-jose
+python-multipart
+python-socketio

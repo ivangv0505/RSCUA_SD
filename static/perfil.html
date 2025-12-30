@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Perfil - RSCUA</title>
+    <link rel="stylesheet" href="css/HeaderStyle.css">
+    <link rel="stylesheet" href="css/PerfilStyle.css">
+    <link rel="stylesheet" href="css/FeedStyle.css">
+    <style>
+        body { padding-top: 80px; }
+        .barra { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background: white; border-bottom: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+
+    <div class="barra">
+        <button onclick="window.location.href='perfil.html'" title="Perfil">
+            <img src="imagenes/perfil.jpg" id="headerAvatar" alt="Perfil">
+        </button>
+        <button onclick="window.location.href='feed.html'" title="Inicio">
+            <img src="imagenes/inicio.jpg" alt="Inicio">
+        </button>
+        
+        <button class="btn-notificacion" onclick="window.location.href='notificaciones.html'" title="Notificaciones">
+            <img src="imagenes/notificaciones.png" alt="Notificaciones">
+            <span id="badgeNotis" class="badge">0</span>
+        </button>
+
+        <button onclick="window.location.href='mensajeria.html'" title="Comunidades">
+            <img src="imagenes/comunidad.png" alt="Comunidades">
+        </button>
+
+        <div class="busqueda">
+            <input type="text" placeholder="Buscar en RSCUA...">
+            <button><img src="imagenes/busqueda.jpg" alt="Buscar" style="width: 30px; height: 30px; padding:0;"></button>
+        </div>
+
+        <button title="Eventos"><img src="imagenes/IconoEvento.png" alt="Eventos"></button>
+        
+        <button onclick="window.location.href='mensajeria.html'" title="Mensajes">
+            <img src="imagenes/chats.png" alt="Mensajes">
+        </button>
+        
+        <button title="Configuración"><img src="imagenes/configuracion.jpg" alt="Configuración"></button>
+
+        <button onclick="logout()" title="Cerrar Sesión">
+            <img src="imagenes/salida.jpg" alt="Salir">
+        </button>
+    </div>
+
+    <div class="perfil-container">
+        <div class="portada">
+            <div style="width:100%; height:100%; background: linear-gradient(90deg, #111 0%, #444 100%);"></div>
+            <div class="foto-perfil-container">
+                <img src="imagenes/perfil.jpg" alt="Avatar" class="foto-perfil-grande">
+            </div>
+        </div>
+
+        <div class="datos-usuario">
+            <h1 id="nombreCompleto">Cargando...</h1>
+            <h3 id="usernameDisplay">@usuario</h3>
+            <p class="bio" id="bioDisplay">Sin descripción.</p>
+            
+            <div class="stats">
+                <span><strong>0</strong> Seguidores</span>
+                <span><strong>0</strong> Seguidos</span>
+                <span id="contadorPosts"><strong>0</strong> Publicaciones</span>
+            </div>
+            
+            <button class="btn-editar" onclick="abrirEditor()">Editar Perfil</button>
+        </div>
+
+        <hr class="divisor">
+
+        <h3>Mis Publicaciones</h3>
+        <div class="feed-publicaciones" id="misPublicaciones">
+            <p style="text-align:center">Cargando...</p>
+        </div>
+    </div>
+
+    <div id="modalEditarPerfil" class="modal-overlay">
+        <div class="modal-box">
+            <h3>Editar Perfil</h3>
+            <textarea id="inputBio" rows="4" placeholder="Escribe tu biografía..."></textarea>
+            <div class="modal-buttons">
+                <button class="btn-modal btn-cancel" onclick="cerrarEditor()">Cancelar</button>
+                <button class="btn-modal btn-confirm" onclick="guardarPerfil()">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalEditarPost" class="modal-overlay">
+        <div class="modal-box">
+            <h3>Editar Publicación</h3>
+            <textarea id="textoEditarInput" rows="4"></textarea>
+            <div class="modal-buttons">
+                <button class="btn-modal btn-cancel" onclick="cerrarModalEditar()">Cancelar</button>
+                <button class="btn-modal btn-confirm" onclick="confirmarEditar()">Guardar</button>
+            </div>
+        </div>
+    </div>
+    <div id="modalEliminar" class="modal-overlay">
+        <div class="modal-box">
+            <h3>¿Eliminar publicación?</h3>
+            <p>Esta acción no se puede deshacer.</p>
+            <div class="modal-buttons">
+                <button class="btn-modal btn-cancel" onclick="cerrarModalEliminar()">Cancelar</button>
+                <button class="btn-modal btn-danger" onclick="confirmarEliminar()">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="js/perfil.js"></script>
+</body>
+</html>

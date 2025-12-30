@@ -1,0 +1,460 @@
+
+/* --- HISTORIAS --- */
+.Historias {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    overflow-x: auto;
+    margin: 10px 0;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+}
+
+.crear-historia button {
+    width: 120px;
+    height: 180px;
+    border: 2px dashed #000;
+    border-radius: 10px;
+    background: #f9f9f9;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.lista-historias ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 15px;
+}
+
+.lista-historias img {
+    width: 120px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid #333;
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+
+.lista-historias img:hover {
+    transform: scale(1.05);
+}
+
+/* --- BOTONES DE ACCIÓN --- */
+.botones {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 20px 0;
+}
+
+.botones button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    background: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.botones button:hover {
+    background: #f0f0f0;
+}
+
+.botones img {
+    width: 25px;
+    height: 25px;
+}
+
+/* --- CREAR PUBLICACIÓN --- */
+.crear-publicacion-container {
+    max-width: 600px;
+    margin: 0 auto 20px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    gap: 15px;
+}
+
+.crear-publicacion-container textarea {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    resize: none;
+    font-family: Arial;
+}
+
+.btn-publicar {
+    background: black;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 15px;
+    cursor: pointer;
+    align-self: flex-end;
+}
+
+/* --- FEED POSTS --- */
+.feed-publicaciones {
+    max-width: 600px;
+    margin: 0 auto;
+    padding-bottom: 50px;
+}
+
+.publicacion {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    padding: 20px;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.post-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #ddd;
+}
+
+.post-info h4 { margin: 0; font-size: 16px; }
+.post-info span { font-size: 12px; color: #777; }
+
+.post-content {
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.post-image {
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.post-actions {
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #555;
+}
+
+.action-btn:hover { color: black; }
+
+/* Estilos comunes para Feed y Perfil */
+.action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espacio entre icono y texto */
+    color: #555;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    padding: 5px 10px;
+    transition: background 0.2s;
+    border-radius: 5px;
+}
+
+.action-btn:hover {
+    background-color: #f0f0f0;
+    color: black;
+}
+
+.action-btn img {
+    width: 20px;  /* Tamaño controlado de los iconos */
+    height: 20px;
+    object-fit: contain;
+}
+
+.post-actions {
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-around; /* Distribuir equitativamente */
+}
+
+/* Menú de Opciones (Tres puntitos) */
+.menu-container {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+.menu-btn {
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #555;
+    padding: 0 5px;
+    line-height: 1;
+}
+
+.menu-btn:hover { color: black; background: #f0f0f0; border-radius: 50%; }
+
+.menu-dropdown {
+    display: none; /* Oculto por defecto */
+    position: absolute;
+    right: 0;
+    top: 30px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 100;
+    width: 120px;
+    overflow: hidden;
+}
+
+.menu-dropdown button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: white;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.menu-dropdown button:hover {
+    background-color: #f5f5f5;
+}
+
+.menu-dropdown button.btn-delete {
+    color: red;
+}
+
+.menu-dropdown.show {
+    display: block;
+}
+
+/* Ajuste para que la publicación soporte posición absoluta del menú */
+.publicacion {
+    position: relative; 
+}
+
+/* --- ESTILOS DE MODALES PERSONALIZADOS --- */
+.modal-overlay {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    backdrop-filter: blur(2px); /* Efecto borroso de fondo */
+}
+
+.modal-box {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    animation: popIn 0.3s ease;
+}
+
+@keyframes popIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.modal-box h3 { margin-top: 0; color: #333; }
+.modal-box p { color: #666; font-size: 14px; }
+
+.modal-box textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    resize: none;
+    margin: 15px 0;
+    font-family: Arial, sans-serif;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.btn-modal {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    flex: 1;
+    transition: transform 0.1s;
+}
+
+.btn-modal:active { transform: scale(0.95); }
+
+.btn-cancel { background-color: #f0f0f0; color: #333; }
+.btn-confirm { background-color: #000; color: white; }
+.btn-danger { background-color: #ff4d4d; color: white; }
+
+/* Ajuste de iconos del menú */
+.menu-icon {
+    width: 20px; height: 20px; 
+    object-fit: contain; 
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+/* Contenedor de herramientas de publicación */
+.herramientas-publicacion {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+.left-tools {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* Botón de subir imagen */
+.btn-upload-img {
+    background: #f0f2f5;
+    border: none;
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-upload-img:hover { background: #e4e6eb; }
+
+/* Select de Privacidad estilizado */
+.select-privacidad {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    background: white;
+    font-size: 13px;
+    color: #555;
+    cursor: pointer;
+    outline: none;
+}
+
+/* Recuadro de Previsualización */
+.preview-container {
+    position: relative;
+    margin-top: 10px;
+    display: none; /* Oculto por defecto */
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    background: #000;
+}
+
+.preview-image {
+    width: 100%;
+    max-height: 300px;
+    object-fit: contain; /* Ajustar imagen sin recortar feo */
+    display: block;
+}
+
+.btn-remove-img {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-remove-img:hover { background: rgba(0,0,0,0.8); }
+
+/* --- CORRECCIÓN DE MÁRGENES (Para que no se corte) --- */
+/* Aumentamos el margen superior porque la barra tapa el contenido */
+.comunidades, .perfil-container, .contenedor-mensajeria, .feed-publicaciones {
+    margin-top: 90px !important; /* Ajuste para separar del header */
+}
+
+/* --- ESTILO DEL BADGE DE NOTIFICACIONES --- */
+.btn-notificacion {
+    position: relative; /* Necesario para posicionar el badge */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.badge {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: #ff3b30; /* Rojo Apple */
+    color: white;
+    border-radius: 50%;
+    padding: 2px 5px;
+    font-size: 10px;
+    font-weight: bold;
+    min-width: 15px;
+    text-align: center;
+    border: 2px solid white; /* Borde blanco para separar del icono */
+    display: none; /* Oculto si es 0 */
+    z-index: 10;
+}
+
+/* Ajuste para que el icono no se mueva */
+.btn-notificacion img {
+    display: block;
+}

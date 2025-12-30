@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mensajería - RSCUA</title>
+    <link rel="stylesheet" href="css/HeaderStyle.css?v=1767070314">
+    <link rel="stylesheet" href="css/FeedStyle.css?v=1767070314">
+    <link rel="stylesheet" href="css/MensajeriaStyle.css?v=1767070314">
+    <link rel="stylesheet" href="css/PerfilStyle.css?v=1767070314">
+    <link rel="stylesheet" href="css/InterfaceChatstyle.css?v=1767070314">
+    <style>
+        /* Fix márgenes globales */
+        body { padding-top: 80px; } 
+        .barra { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background: white; border-bottom: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    
+    <div class="barra">
+        <button onclick="window.location.href='perfil.html'" title="Perfil">
+            <img src="imagenes/perfil.jpg" id="headerAvatar" alt="Perfil">
+        </button>
+        <button onclick="window.location.href='feed.html'" title="Inicio">
+            <img src="imagenes/inicio.jpg" alt="Inicio">
+        </button>
+        
+        <button class="btn-notificacion" onclick="window.location.href='notificaciones.html'" title="Notificaciones">
+            <img src="imagenes/notificaciones.png" alt="Notificaciones">
+            <span id="badgeNotis" class="badge">0</span>
+        </button>
+
+        <button onclick="window.location.href='mensajeria.html'" title="Comunidades">
+            <img src="imagenes/comunidad.png" alt="Comunidades">
+        </button>
+
+        <div class="busqueda">
+            <input type="text" placeholder="Buscar en RSCUA...">
+            <button><img src="imagenes/busqueda.jpg" alt="Buscar" style="width: 30px; height: 30px; padding:0;"></button>
+        </div>
+
+        <button title="Eventos"><img src="imagenes/IconoEvento.png" alt="Eventos"></button>
+        
+        <button onclick="window.location.href='mensajeria.html'" title="Mensajes">
+            <img src="imagenes/chats.png" alt="Mensajes">
+        </button>
+        
+        <button title="Configuración"><img src="imagenes/configuracion.jpg" alt="Configuración"></button>
+
+        <button onclick="logout()" title="Cerrar Sesión">
+            <img src="imagenes/salida.jpg" alt="Salir">
+        </button>
+    </div>
+
+    
+    <div class="comunidades" style="margin-top: 20px;">
+        <h1>Mensajes Entrantes</h1>
+        <div id="listaConversaciones"><p style="text-align:center">Cargando conversaciones...</p></div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="js/mensajeria.js?v=1767070314"></script>
+</body>
+</html>

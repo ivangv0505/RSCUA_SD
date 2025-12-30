@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Feed - RSCUA</title>
+    <link rel="stylesheet" href="css/HeaderStyle.css">
+    <link rel="stylesheet" href="css/FeedStyle.css">
+    <style>
+        body { padding-top: 100px; } /* Ajuste por la barra más grande */
+        .barra { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background: white; border-bottom: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+
+    <div class="barra">
+        <button onclick="window.location.href='perfil.html'" title="Perfil">
+            <img src="imagenes/perfil.jpg" id="headerAvatar" alt="Perfil">
+        </button>
+        <button onclick="window.location.href='feed.html'" title="Inicio">
+            <img src="imagenes/inicio.jpg" alt="Inicio">
+        </button>
+        
+        <button class="btn-notificacion" onclick="window.location.href='notificaciones.html'" title="Notificaciones">
+            <img src="imagenes/notificaciones.png" alt="Notificaciones">
+            <span id="badgeNotis" class="badge">0</span>
+        </button>
+
+        <button onclick="window.location.href='mensajeria.html'" title="Comunidades">
+            <img src="imagenes/comunidad.png" alt="Comunidades">
+        </button>
+
+        <div class="busqueda">
+            <input type="text" placeholder="Buscar en RSCUA...">
+            <button><img src="imagenes/busqueda.jpg" alt="Buscar"></button>
+        </div>
+
+        <button title="Eventos"><img src="imagenes/IconoEvento.png" alt="Eventos"></button>
+        
+        <button onclick="window.location.href='mensajeria.html'" title="Mensajes">
+            <img src="imagenes/chats.png" alt="Mensajes">
+        </button>
+        
+        <button title="Configuración"><img src="imagenes/configuracion.jpg" alt="Configuración"></button>
+
+        <button onclick="logout()" title="Cerrar Sesión">
+            <img src="imagenes/salida.jpg" alt="Salir">
+        </button>
+    </div>
+
+    <div class="Historias">
+        <div class="crear-historia"><button>+ Nueva Historia</button></div>
+        <div class="lista-historias">
+            <ul>
+                <li><img src="imagenes/Historia-1.jpeg" onerror="this.style.display='none'"></li>
+                <li><img src="imagenes/Historia-2.jpeg" onerror="this.style.display='none'"></li>
+                <li><img src="imagenes/Historia-5.jpeg" onerror="this.style.display='none'"></li>
+                <li><img src="imagenes/Historia-6.jpeg" onerror="this.style.display='none'"></li>
+                <li><img src="imagenes/Historia-10.jpeg" onerror="this.style.display='none'"></li>
+                <li><img src="imagenes/Historia-11.jpeg" onerror="this.style.display='none'"></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="crear-publicacion-container">
+        <img src="imagenes/perfil.jpg" class="post-avatar" id="avatarInput">
+        <div style="width: 100%; display: flex; flex-direction: column;">
+            <textarea id="textoPost" rows="2" placeholder="¿Qué estás pensando?" style="border:none; outline:none; resize:none; font-family: Arial;"></textarea>
+            
+            <div id="previewContainer" class="preview-container" style="display:none; position:relative; margin-top:10px;">
+                <img id="imgPreview" class="preview-image" style="width:100%; max-height:300px; object-fit:contain;">
+                <button class="btn-remove-img" onclick="quitarImagen()" style="position:absolute; top:5px; right:5px;">×</button>
+            </div>
+
+            <div class="herramientas-publicacion">
+                <div class="left-tools">
+                    <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="manejarArchivo(this)">
+                    <button class="btn-upload-img" onclick="document.getElementById('fileInput').click()" title="Agregar foto">
+                        <img src="imagenes/foto.jpg" style="width:24px; height:24px; object-fit:contain;">
+                    </button>
+                    <select id="privacidadSelect" class="select-privacidad">
+                        <option value="PUBLICO">🌎 Público</option>
+                        <option value="AMIGOS">👥 Amigos</option>
+                        <option value="PRIVADO">🔒 Solo yo</option>
+                    </select>
+                </div>
+                <button class="btn-publicar" onclick="crearPublicacion()">Publicar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="feed-publicaciones" id="contenedorFeed">
+        <p style="text-align: center;">Cargando publicaciones...</p>
+    </div>
+
+    <div id="modalEditarPost" class="modal-overlay">
+        <div class="modal-box">
+            <h3>Editar Publicación</h3>
+            <textarea id="textoEditarInput" rows="4"></textarea>
+            <div class="modal-buttons">
+                <button class="btn-modal btn-cancel" onclick="cerrarModalEditar()">Cancelar</button>
+                <button class="btn-modal btn-confirm" onclick="confirmarEditar()">Guardar</button>
+            </div>
+        </div>
+    </div>
+    <div id="modalEliminar" class="modal-overlay">
+        <div class="modal-box">
+            <h3>¿Eliminar publicación?</h3>
+            <p>Esta acción no se puede deshacer.</p>
+            <div class="modal-buttons">
+                <button class="btn-modal btn-cancel" onclick="cerrarModalEliminar()">Cancelar</button>
+                <button class="btn-modal btn-danger" onclick="confirmarEliminar()">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="js/feed.js"></script>
+</body>
+</html>

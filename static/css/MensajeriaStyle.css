@@ -1,0 +1,44 @@
+
+body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f9f9f9; }
+.comunidades { margin: 20px 50px; padding: 20px 30px; border: 1px solid #ccc; border-radius: 15px; background-color: white; box-shadow: 0px 4px 6px rgba(0,0,0,0.1); }
+.comunidad-item { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; padding: 15px; border: 1px solid #ccc; border-radius: 10px; background-color: #f9f9f9; }
+.comunidad-info h2 { font-size: 20px; margin: 0; }
+.comunidad-info p { font-size: 14px; margin: 0; color: #666; }
+.acciones button { padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; background-color: #ddd; color: black; }
+.acciones button:hover { background-color: #bbb; transform: scale(1.05); }
+
+/* --- CORRECCIÓN DE MÁRGENES (Para que no se corte) --- */
+/* Aumentamos el margen superior porque la barra tapa el contenido */
+.comunidades, .perfil-container, .contenedor-mensajeria, .feed-publicaciones {
+    margin-top: 90px !important; /* Ajuste para separar del header */
+}
+
+/* --- ESTILO DEL BADGE DE NOTIFICACIONES --- */
+.btn-notificacion {
+    position: relative; /* Necesario para posicionar el badge */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.badge {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: #ff3b30; /* Rojo Apple */
+    color: white;
+    border-radius: 50%;
+    padding: 2px 5px;
+    font-size: 10px;
+    font-weight: bold;
+    min-width: 15px;
+    text-align: center;
+    border: 2px solid white; /* Borde blanco para separar del icono */
+    display: none; /* Oculto si es 0 */
+    z-index: 10;
+}
+
+/* Ajuste para que el icono no se mueva */
+.btn-notificacion img {
+    display: block;
+}

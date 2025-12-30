@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarse - RSCUA</title>
+    <link rel="stylesheet" href="css/RegistrarseStyle.css">
+</head>
+<body>
+    <div class="main-container">
+        <div class="logo-section">
+            <img src="imagenes/log_RSCUA.png" alt="RSCUA Logo">
+        </div>
+
+        <div class="form-section">
+            <div class="form-container">
+                <h2>Crear Cuenta</h2>
+                
+                <form id="registerForm">
+                    <div style="display: flex; gap: 10px;">
+                        <div class="input-group" style="flex: 1;">
+                            <label>Nombre</label>
+                            <input type="text" name="nombre" placeholder="Tu nombre" required>
+                        </div>
+                        <div class="input-group" style="flex: 1;">
+                            <label>Apellido</label>
+                            <input type="text" name="apellido" placeholder="Tu apellido" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Usuario </label>
+                        <input type="text" name="username" placeholder="Ej: ivan123" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Correo Institucional</label>
+                        <input type="email" name="email" placeholder="nombre@correo.cua.uam.mx" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Contraseña</label>
+                        <input type="password" name="password" placeholder="Crea una contraseña segura" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Fecha de Nacimiento</label>
+                        <input type="date" name="fecnac" required style="cursor: pointer;">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Género</label>
+                        <input type="hidden" name="sexo" id="sexoInput">
+                        <div class="gender-options">
+                            <div class="gender-card" onclick="seleccionarGenero('Masculino', this)">
+                                <span>👨</span>
+                                <span>Masculino</span>
+                            </div>
+                            <div class="gender-card" onclick="seleccionarGenero('Femenino', this)">
+                                <span>👩</span>
+                                <span>Femenino</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Registrarse</button>
+                    <p class="error-msg" id="mensajeError"></p>
+                </form>
+
+                <button class="btn-back" onclick="window.location.href='login.html'">
+                    ← Volver al Inicio de Sesión
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/register.js"></script>
+</body>
+</html>

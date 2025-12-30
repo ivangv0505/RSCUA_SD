@@ -1,0 +1,110 @@
+
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+body {
+    display: flex;
+    height: 100vh;
+}
+
+.logo {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+}
+
+.logo img {
+    max-width: 100%;
+    height: auto;
+    margin-left: 25px;
+}
+
+.iniciar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.iniciar h2 {
+    margin-bottom: 50px;
+    font-family: Arial;
+    font-size: 30px;
+}
+
+.iniciar form {
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.iniciar label {
+    margin-bottom: 5px;
+    text-align: left;
+    font-size: 20px;
+    font-family: Arial;
+}
+
+.iniciar input {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #000000;
+    border-radius: 14px;
+    font-size: 16px;
+    width: 100%;
+}
+
+.iniciar button {
+    padding: 10px;
+    border: none;
+    background-color: #000000;
+    color: white;
+    border-radius: 20px;
+    font-size: 17px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    margin-left: 40px;
+    margin-right: 20px;
+}
+
+.iniciar button:hover {
+    background-color: #ffffff;
+    color: black;
+}
+
+/* Botón Google */
+.google-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.google-btn img {
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
+    border-radius: 50%;
+}
+
+.google-btn:hover {
+    transform: scale(1.1);
+    background-color: #f2f2f2;
+}
+
+.separador {
+    width: 300px; /* Ajustado para que quepa en el form */
+    height: 2px;
+    background: linear-gradient(to right, transparent, black, transparent);
+    margin: 20px 0;
+}

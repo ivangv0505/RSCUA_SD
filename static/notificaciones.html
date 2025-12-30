@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Notificaciones - RSCUA</title>
+    <link rel="stylesheet" href="css/HeaderStyle.css">
+    <link rel="stylesheet" href="css/MensajeriaStyle.css"> <style>
+        body { padding-top: 80px; }
+        .barra { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background: white; border-bottom: 1px solid #ddd; }
+        
+        .noti-item { 
+            display: flex; align-items: center; padding: 15px; 
+            border-bottom: 1px solid #eee; background: white; transition: 0.2s; cursor: pointer;
+        }
+        .noti-item.no-leido { background-color: #e8f0fe; }
+        .noti-item:hover { background-color: #f5f5f5; }
+        .noti-avatar { width: 50px; height: 50px; border-radius: 50%; margin-right: 15px; }
+        .noti-texto { flex-grow: 1; }
+        .noti-texto h4 { margin: 0; font-size: 16px; }
+        .noti-texto p { margin: 5px 0 0; color: #666; font-size: 14px; }
+        .noti-fecha { font-size: 12px; color: #999; }
+        .noti-icon { font-size: 20px; margin-left: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="barra">
+        <button onclick="window.location.href='perfil.html'" title="Perfil">
+            <img src="imagenes/perfil.jpg" id="headerAvatar" alt="Perfil">
+        </button>
+        <button onclick="window.location.href='feed.html'" title="Inicio">
+            <img src="imagenes/inicio.jpg" alt="Inicio">
+        </button>
+        
+        <button class="btn-notificacion" onclick="window.location.href='notificaciones.html'" title="Notificaciones">
+            <img src="imagenes/notificaciones.png" alt="Notificaciones">
+            <span id="badgeNotis" class="badge">0</span>
+        </button>
+
+        <button onclick="window.location.href='mensajeria.html'" title="Comunidades">
+            <img src="imagenes/comunidad.png" alt="Comunidades">
+        </button>
+
+        <div class="busqueda">
+            <input type="text" placeholder="Buscar en RSCUA...">
+            <button><img src="imagenes/busqueda.jpg" alt="Buscar" style="width: 30px; height: 30px; padding:0;"></button>
+        </div>
+
+        <button title="Eventos"><img src="imagenes/IconoEvento.png" alt="Eventos"></button>
+        
+        <button onclick="window.location.href='mensajeria.html'" title="Mensajes">
+            <img src="imagenes/chats.png" alt="Mensajes">
+        </button>
+        
+        <button title="Configuración"><img src="imagenes/configuracion.jpg" alt="Configuración"></button>
+
+        <button onclick="logout()" title="Cerrar Sesión">
+            <img src="imagenes/salida.jpg" alt="Salir">
+        </button>
+    </div>
+
+    <div class="comunidades">
+        <h1>Notificaciones</h1>
+        <div id="listaNotificaciones">
+            <p style="text-align:center">Cargando...</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="js/notificaciones.js"></script>
+    <script>function logout() { localStorage.clear(); window.location.href="login.html"; }</script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+/* HEADER FINAL (ICONOS GRANDES) */
+body {
+    margin: 0;
+    padding-top: 90px; /* Un poco más de espacio arriba */
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+}
+
+.barra {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px; /* Aumentamos altura de la barra */
+    background-color: white;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly; 
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.barra button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.barra button:hover {
+    background-color: #f0f2f5;
+    border-radius: 50%;
+}
+
+/* --- CAMBIO: ICONOS MÁS GRANDES (40px) --- */
+.barra img {
+    width: 40px; 
+    height: 40px;
+    object-fit: contain;
+}
+
+/* El avatar debe ser redondo y del mismo tamaño */
+#headerAvatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    object-fit: cover;
+}
+
+/* BUSCADOR */
+.busqueda {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    padding: 5px 15px;
+    width: 350px;
+    height: 40px; /* Un poco más alto para acompañar */
+    background-color: white;
+}
+
+.busqueda input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.busqueda button {
+    padding: 0;
+    background: none;
+}
+
+/* La lupa del buscador NO debe ser gigante */
+.busqueda button img {
+    width: 22px !important;
+    height: 22px !important;
+    opacity: 0.6;
+}
+
+/* Badge de notificaciones ajustado al nuevo tamaño */
+.btn-notificacion {
+    position: relative;
+}
+.badge {
+    top: 5px;
+    right: 5px;
+}
