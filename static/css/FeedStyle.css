@@ -458,3 +458,76 @@
 .btn-notificacion img {
     display: block;
 }
+
+/* --- ESTILOS DE COMENTARIOS --- */
+.seccion-comentarios {
+    background-color: #f8f9fa;
+    border-top: 1px solid #eee;
+    padding: 10px 15px;
+    display: none; /* Oculto por defecto */
+    animation: fadeIn 0.3s ease;
+}
+
+.seccion-comentarios.mostrar {
+    display: block;
+}
+
+.lista-comentarios {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+.comentario-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+}
+
+.comentario-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.comentario-bubble {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    padding: 8px 12px;
+    border-radius: 12px;
+    border-top-left-radius: 0;
+    flex: 1;
+}
+
+.comentario-bubble strong {
+    display: block;
+    color: #262626;
+    margin-bottom: 2px;
+    font-size: 12px;
+}
+
+.input-comentario-container {
+    display: flex;
+    gap: 10px;
+}
+
+.input-comentario {
+    flex: 1;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    padding: 8px 12px;
+    outline: none;
+    font-size: 13px;
+}
+
+.btn-enviar-comentario {
+    background: transparent;
+    border: none;
+    color: #0095f6;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }

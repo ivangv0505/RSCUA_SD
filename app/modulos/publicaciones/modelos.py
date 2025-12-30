@@ -20,7 +20,6 @@ class PublicacionBase(SQLModel):
 class Publicacion(PublicacionBase, table=True):
     __tablename__ = "publicaciones"
     id: Optional[int] = Field(default=None, primary_key=True)
-    # --- CAMBIO AQUÍ: datetime.now ---
     fecha: datetime = Field(default_factory=datetime.now) 
     usuario_id: int = Field(foreign_key="usuarios.id")
     usuario: Optional["Usuario"] = Relationship(back_populates="publicaciones")
@@ -35,6 +34,26 @@ class Reaccion(SQLModel, table=True):
     publicacion_id: int = Field(foreign_key="publicaciones.id")
     fecha: datetime = Field(default_factory=datetime.now)
 
+# --- NUEVO MODELO COMENTARIO ---
+class Comentario(SQLModel, table=True):
+    __tablename__ = "comentarios"
+    id: Optional[int] = Field(default=None, primary_key=True)
+    texto: str
+    fecha: datetime = Field(default_factory=datetime.now)
+    usuario_id: int = Field(foreign_key="usuarios.id")
+    publicacion_id: int = Field(foreign_key="publicaciones.id")
+    
+    # Relaciones (opcionales para cargas complejas, pero útiles)
+    # usuario: Optional["Usuario"] = Relationship() 
+
+class ComentarioRead(SQLModel):
+    id: int
+    texto: str
+    fecha: datetime
+    usuario_id: int
+    nombre_usuario: str
+    username: str
+
 class UsuarioMini(SQLModel):
     username: str
     nombre: str
@@ -45,6 +64,7 @@ class PublicacionReadWithUser(PublicacionBase):
     fecha: datetime
     usuario: Optional[UsuarioMini] = None
     likes: int = 0
+    comentarios: int = 0 # Agregamos contador
     ya_di_like: bool = False
 
 class PublicacionUpdate(SQLModel):
