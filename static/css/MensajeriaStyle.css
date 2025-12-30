@@ -42,3 +42,45 @@ body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: 
 .btn-notificacion img {
     display: block;
 }
+
+/* --- MODO OSCURO MENSAJERÍA --- */
+body.oscuro .chat-container {
+    background-color: #121212 !important;
+    border-color: #333 !important;
+}
+
+body.oscuro .contact-list, 
+body.oscuro .chat-area, 
+body.oscuro .chat-header, 
+body.oscuro .messages-box, 
+body.oscuro .input-area {
+    background-color: #121212 !important;
+    border-color: #333 !important;
+    color: #e0e0e0 !important;
+}
+
+body.oscuro .contact-item {
+    border-bottom: 1px solid #333 !important;
+}
+
+body.oscuro .contact-item:hover, 
+body.oscuro .contact-item.active {
+    background-color: #262626 !important;
+    border-right-color: #fff !important;
+}
+
+body.oscuro .contact-info h4 {
+    color: #e0e0e0 !important;
+}
+
+body.oscuro .mensaje.recibido {
+    background-color: #262626 !important;
+    color: #e0e0e0 !important;
+    border: 1px solid #444 !important;
+}
+
+body.oscuro .input-area input {
+    background-color: #262626 !important;
+    color: white !important;
+    border: 1px solid #444 !important;
+}
