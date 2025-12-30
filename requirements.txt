@@ -5,3 +5,4 @@ asyncpg
 python-jose
 python-multipart
 python-socketio
+greenlet
