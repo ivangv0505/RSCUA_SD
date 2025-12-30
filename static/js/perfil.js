@@ -283,4 +283,25 @@ document.addEventListener('click', (e) => {
 
 function abrirEditor() { document.getElementById("modalEditarPerfil").style.display = 'flex'; }
 function cerrarEditor() { document.getElementById("modalEditarPerfil").style.display = 'none'; }
-function guardarPerfil() { alert("Pendiente"); cerrarEditor(); }
+
+async function guardarPerfil() {
+    const bio = document.getElementById("inputBio").value;
+    const token = localStorage.getItem("token");
+    
+    try {
+        const res = await fetch(`${API_URL}/auth/me`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({ descripcion: bio })
+        });
+        
+        if (res.ok) {
+            location.reload();
+        } else {
+            alert("Error al actualizar perfil");
+        }
+    } catch(e) { console.error(e); }
+}
