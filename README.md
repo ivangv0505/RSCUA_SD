@@ -10,7 +10,7 @@ El sistema sigue una arquitectura **Cliente-Servidor** con modularidad lógica:
 
 ---
 
-##Justificación Teórica (Mapeo de Conceptos)
+## Justificación Teórica (Mapeo de Conceptos)
 
 El sistema cumple con los requisitos de la rúbrica y el temario del curso de la uea "Sistemas Distribuidos". A continuación se detalla dónde se encuentra cada concepto en el código:
 
