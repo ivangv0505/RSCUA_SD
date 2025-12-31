@@ -36,11 +36,10 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), session: Async
     
     return create_jwt(user)
 
-# --- NUEVO: LOGIN CON GOOGLE ---
+# NUEVO: LOGIN CON GOOGLE
 @router.post("/google")
 async def login_google(data: TokenGoogle, session: AsyncSession = Depends(get_session)):
     # 1. Validar token directamente con Google
-    # Esto es similar a lo que hacía AuthFirebaseGmail.java pero usando la API REST estándar
     try:
         url = f"https://oauth2.googleapis.com/tokeninfo?id_token={data.token}"
         with urllib.request.urlopen(url) as response:
@@ -84,9 +83,8 @@ async def login_google(data: TokenGoogle, session: AsyncSession = Depends(get_se
         await session.refresh(user)
 
     # 4. Devolver nuestro JWT
-    return create_jwt(user)
+    return create_jwt(user) #jason web token
 
-# --- FIN NUEVO ---
 
 async def get_current_user(token: str = Depends(oauth2_scheme), session: AsyncSession = Depends(get_session)):
     credentials_exception = HTTPException(
