@@ -1,6 +1,6 @@
 # RSCUA_SD:
 
-Este proyecto implementa una plataforma de red social aplicando **11 conceptos fundamentales de Sistemas Distribuidos**
+Este proyecto adapta el proyecto "RSCUA" aplicando **11 conceptos fundamentales de Sistemas Distribuidos**
 
 ## Arquitectura y Tecnologías
 El sistema sigue una arquitectura **Cliente-Servidor** con modularidad lógica:
@@ -43,7 +43,7 @@ El sistema cumple con los requisitos de la rúbrica y el temario del curso de la
     ```
 
 2.  **Configurar Base de Datos:**
-    Asegúrese de tener PostgreSQL corriendo y ajuste la URL en `app/db.py`.
+    Asegurarse de tener PostgreSQL corriendo y ajuste la URL en `app/db.py`.
 
 3.  **Ejecutar Servidor:**
     ```bash
