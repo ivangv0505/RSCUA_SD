@@ -6,12 +6,25 @@ from .modelos import Usuario, UsuarioUpdate, PasswordChange
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import jwt, JWTError
 from datetime import datetime
+from pydantic import BaseModel
+import urllib.request
+import json
+import secrets
 
 router = APIRouter()
 
 SECRET_KEY = "tu_clave_secreta_super_segura" 
 ALGORITHM = "HS256"
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/token")
+
+class TokenGoogle(BaseModel):
+    token: str
+
+# Función auxiliar para crear tokens nuestros
+def create_jwt(user: Usuario):
+    token_data = {"sub": user.username, "version": user.token_version}
+    token = jwt.encode(token_data, SECRET_KEY, algorithm=ALGORITHM)
+    return {"access_token": token, "token_type": "bearer"}
 
 @router.post("/token")
 async def login(form_data: OAuth2PasswordRequestForm = Depends(), session: AsyncSession = Depends(get_session)):
@@ -21,15 +34,64 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), session: Async
     if not user or user.password != form_data.password:
         raise HTTPException(status_code=400, detail="Credenciales incorrectas")
     
-    # INCLUIMOS LA VERSIÓN EN EL TOKEN (Estado del Cliente)
-    token_data = {"sub": user.username, "version": user.token_version}
-    token = jwt.encode(token_data, SECRET_KEY, algorithm=ALGORITHM)
-    return {"access_token": token, "token_type": "bearer"}
+    return create_jwt(user)
+
+# --- NUEVO: LOGIN CON GOOGLE ---
+@router.post("/google")
+async def login_google(data: TokenGoogle, session: AsyncSession = Depends(get_session)):
+    # 1. Validar token directamente con Google
+    # Esto es similar a lo que hacía AuthFirebaseGmail.java pero usando la API REST estándar
+    try:
+        url = f"https://oauth2.googleapis.com/tokeninfo?id_token={data.token}"
+        with urllib.request.urlopen(url) as response:
+            if response.getcode() != 200:
+                raise Exception("Token inválido")
+            google_data = json.loads(response.read())
+    except Exception as e:
+        raise HTTPException(status_code=400, detail="Token de Google inválido")
+
+    email = google_data.get("email")
+    if not email:
+        raise HTTPException(status_code=400, detail="Google no retornó email")
+
+    # 2. Buscar si ya existe el usuario por email
+    query = select(Usuario).where(Usuario.email == email)
+    user = (await session.execute(query)).scalar_one_or_none()
+
+    # 3. Si no existe, lo registramos automáticamente
+    if not user:
+        nombre = google_data.get("given_name", "Usuario")
+        apellido = google_data.get("family_name", "Google")
+        base_username = email.split("@")[0]
+        
+        # Generar username único si ya existe
+        username = base_username
+        counter = 1
+        while (await session.execute(select(Usuario).where(Usuario.username == username))).scalar_one_or_none():
+            username = f"{base_username}{counter}"
+            counter += 1
+            
+        user = Usuario(
+            nombre=nombre,
+            apellido=apellido,
+            username=username,
+            email=email,
+            password=secrets.token_urlsafe(16), # Password aleatoria interna
+            token_version=1
+        )
+        session.add(user)
+        await session.commit()
+        await session.refresh(user)
+
+    # 4. Devolver nuestro JWT
+    return create_jwt(user)
+
+# --- FIN NUEVO ---
 
 async def get_current_user(token: str = Depends(oauth2_scheme), session: AsyncSession = Depends(get_session)):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Credenciales inválidas o expiradas",
+        detail="Credenciales inválidas",
         headers={"WWW-Authenticate": "Bearer"},
     )
     try:
@@ -44,9 +106,9 @@ async def get_current_user(token: str = Depends(oauth2_scheme), session: AsyncSe
     
     if user is None: raise credentials_exception
     
-    # VALIDACIÓN DE CONSISTENCIA: Si la versión no coincide, el token es revocado
-    if token_ver != user.token_version:
-        raise HTTPException(status_code=401, detail="Sesión invalidada. Reingresa.")
+    # Validación distribuida
+    if getattr(user, "token_version", 1) != token_ver:
+        raise HTTPException(status_code=401, detail="Sesión expirada")
         
     return user
 
@@ -64,26 +126,15 @@ async def update_user_me(datos: UsuarioUpdate, current_user: Usuario = Depends(g
     await session.refresh(current_user)
     return current_user
 
-# ENDPOINT CAMBIO DE PASSWORD
 @router.post("/change-password")
-async def cambiar_password(
-    datos: PasswordChange, 
-    current_user: Usuario = Depends(get_current_user), 
-    session: AsyncSession = Depends(get_session)
-):
+async def cambiar_password(datos: PasswordChange, current_user: Usuario = Depends(get_current_user), session: AsyncSession = Depends(get_session)):
     if current_user.password != datos.old_password:
-        raise HTTPException(status_code=400, detail="La contraseña actual es incorrecta")
-    
-    # 1. Actualizar Password
+        raise HTTPException(status_code=400, detail="Password incorrecto")
     current_user.password = datos.new_password
-    
-    # 2. INCREMENTAR VERSIÓN (Invalida todos los tokens existentes globalmente)
     current_user.token_version += 1
-    
     session.add(current_user)
     await session.commit()
-    
-    return {"mensaje": "Contraseña actualizada. Sesiones cerradas por seguridad."}
+    return {"mensaje": "Contraseña actualizada"}
 
 @router.post("/registrar", response_model=Usuario)
 async def registrar(usuario: Usuario, session: AsyncSession = Depends(get_session)):

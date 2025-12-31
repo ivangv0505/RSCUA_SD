@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión - RSCUA</title>
     <link rel="stylesheet" href="css/InicioStyle.css">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
     <div class="logo">
@@ -35,9 +36,21 @@
 
         <div class="separador"></div>
 
-        <button class="google-btn" onclick="alert('Funcionalidad de Google pendiente')">
-            <img src="imagenes/logo_google.png" alt="Google">
-        </button>
+        <div id="g_id_onload"
+             data-client_id="466817774036-0q2rmiipsqbtkrs4814q4t3cov7c60m1.apps.googleusercontent.com"
+             data-callback="handleGoogleResponse"
+             data-auto_prompt="false">
+        </div>
+
+        <div class="g_id_signin"
+             data-type="standard"
+             data-size="large"
+             data-theme="outline"
+             data-text="sign_in_with"
+             data-shape="rectangular"
+             data-logo_alignment="left">
+        </div>
+        
     </div>
 
     <script src="js/login.js"></script>
