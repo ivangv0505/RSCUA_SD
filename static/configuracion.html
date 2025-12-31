@@ -5,10 +5,16 @@
     <title>Configuración</title>
     <link rel="stylesheet" href="css/HeaderStyle.css">
     <style>
-        body { padding-top: 100px; font-family: Arial, sans-serif; transition: background 0.3s, color 0.3s; }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; transition: background 0.3s, color 0.3s; }
         body.oscuro { background-color: #2e2e2e; color: #D3D3D3; }
         
-        .configuraciones { margin: 20px 50px; padding: 20px 30px; border: 1px solid #ccc; border-radius: 15px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); background: white; }
+        .barra { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background: white; border-bottom: 1px solid #ddd; display: flex; align-items: center; justify-content: space-around; padding: 5px 0; }
+        .barra button { background: none; border: none; cursor: pointer; }
+        .barra img { width: 40px; height: 40px; border-radius: 50%; transition: 0.2s; }
+        .barra img:hover { transform: scale(1.1); }
+        body.oscuro .barra { background-color: #333; border-bottom: 1px solid #555; }
+
+        .configuraciones { margin: 80px 50px 20px; padding: 20px 30px; border: 1px solid #ccc; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         body.oscuro .configuraciones { background-color: #333; border-color: #555; }
         
         .configuraciones h1 { font-size: 32px; margin-bottom: 20px; }
@@ -18,15 +24,21 @@
         body.oscuro .config-btn:hover { background-color: #555; }
         .config-btn img { margin-right: 15px; width: 50px; height: 50px; border-radius: 50%; }
 
-        .panel { display: none; padding: 20px; border: 1px solid #ccc; border-radius: 10px; background-color: #f9f9f9; margin-top: 10px; }
+        .panel { margin-top: 10px; padding: 20px; border: 1px solid #ccc; border-radius: 10px; background-color: #f9f9f9; display: none; }
         body.oscuro .panel { background-color: #3a3a3a; border-color: #555; }
-        .panel button { margin: 10px; padding: 10px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; background-color: #ddd; }
-        body.oscuro .panel button { background-color: #555; color: white; }
-        .search-results { position: absolute; top: 45px; left:0; width: 100%; background: white; border: 1px solid #ccc; z-index: 2000; max-height: 300px; overflow-y: auto; display:none; }
+        
+        .panel-btn { margin: 5px; padding: 10px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; background-color: #ddd; }
+        body.oscuro .panel-btn { background-color: #555; color: white; }
+        
+        /* Estilos para inputs del panel de contraseña */
+        .panel input { display: block; width: 90%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
+        body.oscuro .panel input { background-color: #2c2c2c; color: white; border: 1px solid #555; }
+
+        .search-results { position: absolute; top: 45px; left:0; width: 100%; background: white; border: 1px solid #ccc; z-index: 2000; max-height: 300px; overflow-y: auto; display:none; border-radius: 0 0 5px 5px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body>
-    
+
     <div class="barra">
         <button onclick="window.location.href='perfil.html'" title="Perfil">
             <img src="imagenes/perfil.jpg" id="headerAvatar" alt="Perfil">
@@ -67,7 +79,6 @@
         </button>
     </div>
 
-
     <div class="configuraciones">
         <h1>Configuración</h1>
 
@@ -76,16 +87,25 @@
         </button>
         <div id="panel-tema" class="panel">
             <h2>Selecciona el tema:</h2>
-            <button onclick="guardarConfig('tema', 'OSCURO')">Modo Oscuro</button>
-            <button onclick="guardarConfig('tema', 'CLARO')">Modo Claro</button>
+            <button class="panel-btn" onclick="guardarConfig('tema', 'OSCURO')">Modo Oscuro</button>
+            <button class="panel-btn" onclick="guardarConfig('tema', 'CLARO')">Modo Claro</button>
         </div>
 
         <button class="config-btn">
             <img src="imagenes/perfil.jpg"> Cambiar nombre de usuario
         </button>
-        <button class="config-btn">
+
+        <button class="config-btn" onclick="toggle('panel-pass')">
             <img src="imagenes/contrasenia.jpg"> Cambiar contraseña
         </button>
+        <div id="panel-pass" class="panel">
+            <h2>Seguridad de la cuenta</h2>
+            <p style="font-size:14px; color:#777;">Al cambiar tu contraseña, se cerrarán todas las sesiones abiertas.</p>
+            <input type="password" id="oldPass" placeholder="Contraseña actual">
+            <input type="password" id="newPass" placeholder="Nueva contraseña">
+            <button class="panel-btn" style="background:#0095f6; color:white;" onclick="cambiarPassword()">Actualizar</button>
+        </div>
+
         <button class="config-btn">
             <img src="imagenes/foto.jpg"> Cambiar foto de perfil
         </button>
@@ -95,9 +115,9 @@
         </button>
         <div id="panel-idioma" class="panel">
             <h2>Selecciona el idioma:</h2>
-            <button onclick="guardarConfig('idioma', 'ES')">Español</button>
-            <button onclick="guardarConfig('idioma', 'EN')">Inglés</button>
-            <button onclick="guardarConfig('idioma', 'FR')">Francés</button>
+            <button class="panel-btn" onclick="guardarConfig('idioma', 'ES')">Español</button>
+            <button class="panel-btn" onclick="guardarConfig('idioma', 'EN')">Inglés</button>
+            <button class="panel-btn" onclick="guardarConfig('idioma', 'FR')">Francés</button>
         </div>
 
         <button class="config-btn">
@@ -110,72 +130,71 @@
 
     <script>
         const API = "http://localhost:8000";
+        const token = localStorage.getItem("token");
+
         function toggle(id) {
+            document.querySelectorAll('.panel').forEach(p => p.style.display = 'none');
             const el = document.getElementById(id);
-            el.style.display = el.style.display === 'none' ? 'block' : 'none';
+            if(el) el.style.display = 'block';
         }
+
         async function guardarConfig(clave, valor) {
-            const t = localStorage.getItem("token");
+            const body = {}; body[clave] = valor;
             try {
                 const res = await fetch(`${API}/configuracion/`, {
                     method: "PUT",
-                    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${t}` },
-                    body: JSON.stringify({ [clave]: valor })
+                    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+                    body: JSON.stringify(body)
                 });
                 if(res.ok) {
-                    if(clave==='tema') aplicarTema(valor);
+                    if(clave==='tema') { 
+                        localStorage.setItem("tema", valor);
+                        aplicarTema(valor); 
+                    }
                     alert("Guardado");
                 }
-            } catch(e) {}
+            } catch(e) { console.error(e); }
         }
-        function aplicarTema(t) {
-            if(t==='OSCURO') document.body.classList.add('oscuro');
+
+        async function cambiarPassword() {
+            const oldP = document.getElementById('oldPass').value;
+            const newP = document.getElementById('newPass').value;
+            if(!oldP || !newP) return alert("Completa los campos");
+
+            try {
+                const res = await fetch(`${API}/auth/change-password`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+                    body: JSON.stringify({ old_password: oldP, new_password: newP })
+                });
+                const data = await res.json();
+                if(res.ok) {
+                    alert("¡Éxito! Tu sesión ha expirado por seguridad.");
+                    localStorage.clear();
+                    window.location.href = "login.html";
+                } else {
+                    alert("Error: " + data.detail);
+                }
+            } catch(e) { console.error(e); }
+        }
+
+        function aplicarTema(tema) {
+            if(tema === 'OSCURO') document.body.classList.add('oscuro');
             else document.body.classList.remove('oscuro');
         }
-        // Init
-        const t = localStorage.getItem("token");
-        if(t) fetch(`${API}/configuracion/`, {headers:{"Authorization":`Bearer ${t}`}}).then(r=>r.json()).then(d=>aplicarTema(d.tema));
-    </script>
-    
-    <script>
-        // Lógica de búsqueda global
-        const inputB = document.getElementById('inputBusquedaGlobal');
-        const resultsB = document.getElementById('searchResults');
-        let timeoutB;
-        
-        if(inputB) {
-            inputB.addEventListener('input', (e) => {
-                clearTimeout(timeoutB);
-                const q = e.target.value.trim();
-                if(!q) { resultsB.style.display='none'; return; }
-                
-                timeoutB = setTimeout(async () => {
-                    const t = localStorage.getItem("token");
-                    if(!t) return;
-                    try {
-                        const r = await fetch(`http://localhost:8000/directorios/buscar?q=${q}`, {headers:{"Authorization":`Bearer ${t}`}});
-                        if(r.ok) {
-                            const d = await r.json();
-                            resultsB.innerHTML = '';
-                            if(d.length === 0) {
-                                resultsB.innerHTML = '<div style="padding:10px; color:#666;">Sin resultados</div>';
-                            } else {
-                                d.forEach(i => {
-                                    if(i.tipo === 'USUARIO') {
-                                        resultsB.innerHTML += `<div class="search-item" onclick="window.location.href='perfil.html?u=${i.subtitulo.replace('@','')}'" style="padding:10px; border-bottom:1px solid #eee; cursor:pointer; display:flex; align-items:center;"><img src="imagenes/perfil.jpg" style="width:30px; height:30px; border-radius:50%; margin-right:10px;"><span>${i.titulo}</span></div>`;
-                                    }
-                                });
-                            }
-                            resultsB.style.display = 'block';
-                        }
-                    } catch(e){}
-                }, 300);
-            });
-        }
-        document.addEventListener('click', (e) => { if(!e.target.closest('.busqueda')) resultsB.style.display='none'; });
-        function logout(){localStorage.clear(); window.location.href="login.html";}
-    </script>
 
+        // Init
+        if(token) {
+            fetch(`${API}/configuracion/`, { headers: { "Authorization": `Bearer ${token}` } })
+                .then(r => r.json())
+                .then(d => { aplicarTema(d.tema); });
+        } else {
+            window.location.href="login.html";
+        }
+
+        function logout(){ localStorage.clear(); window.location.href="login.html"; }
+    </script>
+<script src="js/busqueda.js?v=1"></script>
 <script src="js/tema.js"></script>
 </body>
 </html>

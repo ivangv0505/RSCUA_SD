@@ -9,6 +9,7 @@
     <style>
         body { padding-top: 80px; }
         .barra { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background: white; border-bottom: 1px solid #ddd; }
+        .search-results { position: absolute; top: 45px; left:0; width: 100%; background: white; border: 1px solid #ccc; z-index: 2000; max-height: 300px; overflow-y: auto; display:none; border-radius: 0 0 5px 5px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body>
@@ -26,22 +27,23 @@
             <span id="badgeNotis" class="badge">0</span>
         </button>
 
-        <button onclick="window.location.href='mensajeria.html'" title="Comunidades">
+        <button onclick="window.location.href='comunidades.html'" title="Comunidades">
             <img src="imagenes/comunidad.png" alt="Comunidades">
         </button>
 
-        <div class="busqueda">
-            <input type="text" placeholder="Buscar en RSCUA...">
-            <button><img src="imagenes/busqueda.jpg" alt="Buscar" style="width: 30px; height: 30px; padding:0;"></button>
+        <div class="busqueda" style="position:relative;">
+            <input type="text" placeholder="Buscar en RSCUA..." id="inputBusquedaGlobal">
+            <button><img src="imagenes/busqueda.jpg" alt="Buscar"></button>
+            <div id="searchResults" class="search-results"></div>
         </div>
 
-        <button title="Eventos"><img src="imagenes/IconoEvento.png" alt="Eventos"></button>
+        <button onclick="window.location.href='eventos.html'" title="Eventos"><img src="imagenes/IconoEvento.png" alt="Eventos"></button>
         
         <button onclick="window.location.href='mensajeria.html'" title="Mensajes">
             <img src="imagenes/chats.png" alt="Mensajes">
         </button>
         
-        <button title="Configuración"><img src="imagenes/configuracion.jpg" alt="Configuración"></button>
+        <button onclick="window.location.href='configuracion.html'" title="Configuración"><img src="imagenes/configuracion.jpg" alt="Configuración"></button>
 
         <button onclick="logout()" title="Cerrar Sesión">
             <img src="imagenes/salida.jpg" alt="Salir">
@@ -112,6 +114,8 @@
 
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <script src="js/perfil.js"></script>
+    <script src="js/busqueda.js?v=1"></script>
+    <script>function logout(){ localStorage.clear(); window.location.href="login.html"; }</script>
 <script src="js/tema.js"></script>
 </body>
 </html>

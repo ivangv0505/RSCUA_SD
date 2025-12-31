@@ -21,8 +21,12 @@ class Usuario(UsuarioBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     password: str
     
+    #para invalidación global de sesiones
+    #esto se incrementa cada vez que el usuario cambia su contraseña
+    token_version: int = Field(default=1) 
+    
     publicaciones: List["Publicacion"] = Relationship(back_populates="usuario")
-    eventos: List["Evento"] = Relationship(back_populates="organizador") 
+    eventos: List["Evento"] = Relationship(back_populates="organizador")
 
 class UsuarioCreate(UsuarioBase):
     password: str
@@ -31,3 +35,7 @@ class UsuarioUpdate(SQLModel):
     nombre: Optional[str] = None
     apellido: Optional[str] = None
     descripcion: Optional[str] = None
+
+class PasswordChange(SQLModel):
+    old_password: str
+    new_password: str

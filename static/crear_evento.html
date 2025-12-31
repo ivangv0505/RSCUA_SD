@@ -5,20 +5,56 @@
     <title>Crear Evento</title>
     <link rel="stylesheet" href="css/HeaderStyle.css">
     <style>
-        body { font-family: Arial, sans-serif; padding-top: 80px; background: #fafafa; }
+        body { font-family: Arial, sans-serif; padding-top: 100px; background: #fafafa; }
         .form-container { max-width: 600px; margin: 20px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .form-group { margin-bottom: 15px; }
         label { display: block; margin-bottom: 5px; font-weight: bold; }
         input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
         .btn-submit { width: 100%; padding: 12px; background: #28a745; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; }
         .btn-submit:hover { background: #218838; }
+        .search-results { position: absolute; top: 45px; left:0; width: 100%; background: white; border: 1px solid #ccc; z-index: 2000; max-height: 300px; overflow-y: auto; display:none; border-radius: 0 0 5px 5px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body>
-    <header>
-        <div class="logo">RSCUA</div>
-        <nav><a href="eventos.html">Volver</a></nav>
-    </header>
+    <div class="barra">
+        <button onclick="window.location.href='perfil.html'" title="Perfil">
+            <img src="imagenes/perfil.jpg" id="headerAvatar" alt="Perfil">
+        </button>
+        <button onclick="window.location.href='feed.html'" title="Inicio">
+            <img src="imagenes/inicio.jpg" alt="Inicio">
+        </button>
+        
+        <button class="btn-notificacion" onclick="window.location.href='notificaciones.html'" title="Notificaciones">
+            <img src="imagenes/notificaciones.png" alt="Notificaciones">
+            <span id="badgeNotis" class="badge">0</span>
+        </button>
+
+        <button onclick="window.location.href='comunidades.html'" title="Comunidades">
+            <img src="imagenes/comunidad.png" alt="Comunidades">
+        </button>
+
+        <div class="busqueda" style="position:relative;">
+            <input type="text" placeholder="Buscar en RSCUA..." id="inputBusquedaGlobal">
+            <button><img src="imagenes/busqueda.jpg" alt="Buscar"></button>
+            <div id="searchResults" class="search-results"></div>
+        </div>
+
+        <button onclick="window.location.href='eventos.html'" title="Eventos">
+            <img src="imagenes/IconoEvento.png" alt="Eventos">
+        </button>
+        
+        <button onclick="window.location.href='mensajeria.html'" title="Mensajes">
+            <img src="imagenes/chats.png" alt="Mensajes">
+        </button>
+        
+        <button onclick="window.location.href='configuracion.html'" title="Configuración">
+            <img src="imagenes/configuracion.jpg" alt="Configuración">
+        </button>
+
+        <button onclick="logout()" title="Cerrar Sesión">
+            <img src="imagenes/salida.jpg" alt="Salir">
+        </button>
+    </div>
 
     <div class="form-container">
         <h2>Nuevo Evento</h2>
@@ -34,5 +70,10 @@
             <button type="submit" class="btn-submit">Publicar Evento</button>
         </form>
     </div>
+
+    <script src="js/busqueda.js?v=1"></script>
+    <script>
+        function logout(){ localStorage.clear(); window.location.href="login.html"; }
+    </script>
 </body>
 </html>

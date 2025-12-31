@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     conectarSocket();
     cargarFeed();
     actualizarBadge();
-    inicializarBusquedaGlobal();
     
     window.onclick = (e) => { 
         if(!e.target.closest('.menu-btn')) {
@@ -269,101 +268,3 @@ function abrirModalEditar(id, txt){ postAEditarId=id; document.getElementById('t
 function cerrarModalEditar(){ document.getElementById('modalEditarPost').style.display='none'; }
 async function confirmarEditar(){ const txt=document.getElementById('textoEditarInput').value; await fetch(`${API_URL}/publicaciones/${postAEditarId}`, { method:"PUT", headers:{"Content-Type":"application/json", "Authorization":`Bearer ${localStorage.getItem("token")}`}, body:JSON.stringify({texto:txt}) }); location.reload(); }
 function logout(){ localStorage.clear(); window.location.href="login.html"; }
-
-function inicializarBusquedaGlobal() {
-    const inputBusqueda = document.getElementById('inputBusquedaGlobal');
-    let resultBox = document.getElementById('searchResults');
-    if (!inputBusqueda) return;
-
-    // Si no hay contenedor, créalo y aplica estilos (igual que en notificaciones)
-    if (!resultBox) {
-        const wrap = inputBusqueda.closest('.busqueda');
-        resultBox = document.createElement('div');
-        resultBox.className = 'search-results';
-        resultBox.style.display = 'none';
-        if (wrap) wrap.appendChild(resultBox);
-    }
-
-    const styleSearch = document.createElement('style');
-    styleSearch.innerHTML = `
-        .busqueda { position: relative; }
-        .search-results {
-            position: absolute; top: 100%; left: 0; right: 0;
-            background: white; border: 1px solid #ccc; border-radius: 0 0 10px 10px;
-            max-height: 400px; overflow-y: auto; z-index: 2000;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-        .search-item {
-            padding: 10px; border-bottom: 1px solid #eee; cursor: pointer;
-            display: flex; align-items: center; gap: 10px; text-align: left;
-        }
-        .search-item:hover { background: #f5f5f5; }
-        .search-item img { width: 35px; height: 35px; border-radius: 5px; object-fit: cover; }
-        .search-info b { display: block; font-size: 14px; color: #333; }
-        .search-info span { font-size: 12px; color: #888; text-transform: uppercase; font-weight: bold; }
-        .badge-tipo { font-size: 10px; padding: 2px 5px; border-radius: 4px; margin-left: auto; }
-        .tipo-usuario { background: #e3f2fd; color: #1565c0; }
-        .tipo-post { background: #fff3e0; color: #ef6c00; }
-    `;
-    document.head.appendChild(styleSearch);
-
-    let timeoutSearch;
-    inputBusqueda.addEventListener('input', (e) => {
-        clearTimeout(timeoutSearch);
-        const q = e.target.value.trim();
-        if (!q) { resultBox.style.display = 'none'; return; }
-        timeoutSearch = setTimeout(() => realizarBusqueda(q, resultBox), 300);
-    });
-
-    document.addEventListener('click', (e) => {
-        if (inputBusqueda.closest('.busqueda') && !inputBusqueda.closest('.busqueda').contains(e.target)) {
-            resultBox.style.display = 'none';
-        }
-    });
-}
-
-async function realizarBusqueda(query, resultBox) {
-    const token = localStorage.getItem("token");
-    try {
-        const res = await fetch(`${API_URL}/directorios/buscar?q=${query}`, {
-            headers: { "Authorization": `Bearer ${token}` }
-        });
-        if (res.ok) {
-            const data = await res.json();
-            renderizarResultados(data, resultBox);
-        }
-    } catch (e) {}
-}
-
-function renderizarResultados(items, resultBox) {
-    resultBox.innerHTML = '';
-    if (items.length === 0) {
-        resultBox.innerHTML = '<div style="padding:15px; color:#777;">Sin coincidencias</div>';
-    } else {
-        items.forEach(item => {
-            const div = document.createElement('div');
-            div.className = 'search-item';
-            const badgeClass = item.tipo === 'USUARIO' ? 'tipo-usuario' : 'tipo-post';
-            
-            div.innerHTML = `
-                <img src="${item.imagen || 'imagenes/perfil.jpg'}" onerror="this.src='imagenes/perfil.jpg'">
-                <div class="search-info">
-                    <b>${item.titulo}</b>
-                    <span>${item.subtitulo}</span>
-                </div>
-                <span class="badge-tipo ${badgeClass}">${item.tipo}</span>
-            `;
-            
-            div.onclick = () => {
-                if (item.tipo === 'USUARIO') {
-                    window.location.href = `perfil.html?u=${item.subtitulo.replace('@','')}`;
-                } else {
-                    alert(`Has localizado el Post ID: ${item.id}`);
-                }
-                resultBox.style.display = 'none';
-            };
-            resultBox.appendChild(div);
-        });
-    }
-    resultBox.style.display = 'block';
-}

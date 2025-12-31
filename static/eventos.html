@@ -74,45 +74,8 @@
         </a>
     </div>
     
-    <script>
-        // Lógica de búsqueda global
-        const inputB = document.getElementById('inputBusquedaGlobal');
-        const resultsB = document.getElementById('searchResults');
-        let timeoutB;
-        
-        if(inputB) {
-            inputB.addEventListener('input', (e) => {
-                clearTimeout(timeoutB);
-                const q = e.target.value.trim();
-                if(!q) { resultsB.style.display='none'; return; }
-                
-                timeoutB = setTimeout(async () => {
-                    const t = localStorage.getItem("token");
-                    if(!t) return;
-                    try {
-                        const r = await fetch(`http://localhost:8000/directorios/buscar?q=${q}`, {headers:{"Authorization":`Bearer ${t}`}});
-                        if(r.ok) {
-                            const d = await r.json();
-                            resultsB.innerHTML = '';
-                            if(d.length === 0) {
-                                resultsB.innerHTML = '<div style="padding:10px; color:#666;">Sin resultados</div>';
-                            } else {
-                                d.forEach(i => {
-                                    if(i.tipo === 'USUARIO') {
-                                        resultsB.innerHTML += `<div class="search-item" onclick="window.location.href='perfil.html?u=${i.subtitulo.replace('@','')}'" style="padding:10px; border-bottom:1px solid #eee; cursor:pointer; display:flex; align-items:center;"><img src="imagenes/perfil.jpg" style="width:30px; height:30px; border-radius:50%; margin-right:10px;"><span>${i.titulo}</span></div>`;
-                                    }
-                                });
-                            }
-                            resultsB.style.display = 'block';
-                        }
-                    } catch(e){}
-                }, 300);
-            });
-        }
-        document.addEventListener('click', (e) => { if(!e.target.closest('.busqueda')) resultsB.style.display='none'; });
-        function logout(){localStorage.clear(); window.location.href="login.html";}
-    </script>
-
+    <script src="js/busqueda.js?v=1"></script>
+    <script>function logout(){localStorage.clear(); window.location.href="login.html";}</script>
 <script src="js/tema.js"></script>
 </body>
 </html>

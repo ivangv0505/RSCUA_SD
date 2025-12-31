@@ -43,7 +43,6 @@ class Comentario(SQLModel, table=True):
     usuario_id: int = Field(foreign_key="usuarios.id")
     publicacion_id: int = Field(foreign_key="publicaciones.id")
     
-    # Relaciones (opcionales para cargas complejas, pero útiles)
     # usuario: Optional["Usuario"] = Relationship() 
 
 class ComentarioRead(SQLModel):
