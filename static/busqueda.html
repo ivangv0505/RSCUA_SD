@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Búsqueda - RSCUA</title>
+    <!-- Reutilizamos los estilos de la barra de navegación -->
+    <link rel="stylesheet" href="css/HeaderStyle.css">
+    <style>
+        body {
+            padding-top: 100px;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
+        /* Contenedor principal de resultados */
+        .resultados-container {
+            margin: 20px auto;
+            max-width: 800px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        .resultados-container h2 {
+            padding: 20px;
+            margin: 0;
+            border-bottom: 1px solid #f1f1f1;
+            font-size: 20px;
+        }
+        /* Ajusta los elementos de búsqueda para que ocupen todo el ancho */
+        #listaResultados .search-item {
+            padding: 15px;
+            border-bottom: 1px solid #f1f1f1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        #listaResultados .search-item:hover {
+            background-color: #f8f9fa;
+        }
+        #listaResultados .search-item img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        #listaResultados .search-info b {
+            display: block;
+            font-size: 16px;
+            color: #222;
+        }
+        #listaResultados .search-info span {
+            font-size: 12px;
+            color: #888;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        #listaResultados .badge-tipo {
+            font-size: 11px;
+            padding: 4px 7px;
+            border-radius: 6px;
+            margin-left: auto;
+            letter-spacing: 0.3px;
+        }
+        #listaResultados .tipo-usuario {
+            background: #e8f1ff;
+            color: #2a7ae4;
+        }
+        #listaResultados .tipo-post {
+            background: #fff1e6;
+            color: #ef6c00;
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra de navegación principal -->
+    <div class="barra">
+        <button onclick="window.location.href='perfil.html'" title="Perfil">
+            <img src="imagenes/perfil.jpg" id="headerAvatar" alt="Perfil">
+        </button>
+        <button onclick="window.location.href='feed.html'" title="Inicio">
+            <img src="imagenes/inicio.jpg" alt="Inicio">
+        </button>
+        <button class="btn-notificacion" onclick="window.location.href='notificaciones.html'" title="Notificaciones">
+            <img src="imagenes/notificaciones.png" alt="Notificaciones">
+            <span id="badgeNotis" class="badge">0</span>
+        </button>
+        <button onclick="window.location.href='comunidades.html'" title="Comunidades">
+            <img src="imagenes/comunidad.png" alt="Comunidades">
+        </button>
+        <div class="busqueda" style="position:relative;">
+            <input type="text" placeholder="Buscar en RSCUA..." id="inputBusquedaGlobal">
+            <button><img src="imagenes/busqueda.jpg" alt="Buscar"></button>
+            <div id="searchResults" class="search-results"></div>
+        </div>
+        <button onclick="window.location.href='eventos.html'" title="Eventos">
+            <img src="imagenes/IconoEvento.png" alt="Eventos">
+        </button>
+        <button onclick="window.location.href='mensajeria.html'" title="Mensajes">
+            <img src="imagenes/chats.png" alt="Mensajes">
+        </button>
+        <button onclick="window.location.href='configuracion.html'" title="Configuración">
+            <img src="imagenes/configuracion.jpg" alt="Configuración">
+        </button>
+        <button onclick="logout()" title="Cerrar Sesión">
+            <img src="imagenes/salida.jpg" alt="Salir">
+        </button>
+    </div>
+
+    <!-- Contenedor de resultados -->
+    <div class="resultados-container">
+        <h2>Resultados de búsqueda</h2>
+        <div id="listaResultados"></div>
+    </div>
+
+    <!-- Lógica de búsqueda y redirección -->
+    <!-- Actualizamos el parámetro de versión para forzar refresco cuando se cambie el script -->
+    <script src="js/busqueda.js?v=2"></script>
+    <script>
+        // Define la función de logout aquí para evitar errores de referencia
+        function logout(){
+            localStorage.clear();
+            window.location.href="login.html";
+        }
+    </script>
+    <script src="js/tema.js"></script>
+</body>
+</html>

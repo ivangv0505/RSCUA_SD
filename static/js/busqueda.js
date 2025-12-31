@@ -1,9 +1,22 @@
 // Búsqueda global reutilizable (mismo estilo que feed)
+// Este archivo proporciona funcionalidad para un buscador desplegable en
+// la barra de navegación y también soporta una página dedicada de
+// resultados (busqueda.html). El buscador funciona de forma asíncrona
+// consumiendo el endpoint `/directorios/buscar` del backend.
+
 const API_URL_SEARCH = (typeof API_URL !== "undefined") ? API_URL : "http://localhost:8000";
 let estiloBusquedaInyectado = false;
 
 document.addEventListener("DOMContentLoaded", () => {
+    // Inicializa el buscador flotante que se muestra como un dropdown en todas
+    // las páginas. Esto crea un contenedor para resultados y escucha los
+    // eventos de input.
     inicializarBusquedaGlobal();
+    // Inicializa la lógica de redirección a la página de búsqueda y la
+    // ejecución de consultas en busqueda.html. Esta función se ejecuta en
+    // todas las páginas, pero sólo actúa si existen los elementos
+    // correspondientes (botón de la lupa, input y contenedor de resultados).
+    inicializarBusquedaPagina();
 });
 
 function inicializarBusquedaGlobal() {
@@ -21,6 +34,7 @@ function inicializarBusquedaGlobal() {
     }
     if (!resultBox) return;
 
+    // Inyecta estilos una sola vez para evitar duplicados
     if (!estiloBusquedaInyectado) {
         const style = document.createElement("style");
         style.innerHTML = `
@@ -55,11 +69,57 @@ function inicializarBusquedaGlobal() {
         timeoutSearch = setTimeout(() => realizarBusqueda(q, resultBox), 250);
     });
 
+    // Oculta la lista de resultados si se hace clic fuera de ella
     document.addEventListener("click", (e) => {
         if (wrap && !wrap.contains(e.target)) {
             resultBox.style.display = "none";
         }
     });
+}
+
+/**
+ * Inicializa la funcionalidad de la página de búsqueda dedicada y la
+ * redirección desde la barra de búsqueda. Esta función busca el botón de
+ * búsqueda dentro del contenedor `.busqueda` y añade manejadores para
+ * redirigir a `busqueda.html` con el parámetro `q`. Si la página actual
+ * contiene un elemento con id `listaResultados`, se interpretará como la
+ * página de resultados y se realizará una búsqueda inicial.
+ */
+function inicializarBusquedaPagina() {
+    const input = document.getElementById("inputBusquedaGlobal");
+    const buscWrap = input ? input.closest(".busqueda") : null;
+    const botonBuscar = buscWrap ? buscWrap.querySelector("button") : null;
+
+    // Asigna eventos de redirección al botón de la lupa y a la tecla Enter
+    if (input && botonBuscar) {
+        botonBuscar.addEventListener("click", () => {
+            const q = input.value.trim();
+            if (q) {
+                window.location.href = `busqueda.html?q=${encodeURIComponent(q)}`;
+            }
+        });
+        input.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                const q = input.value.trim();
+                if (q) {
+                    window.location.href = `busqueda.html?q=${encodeURIComponent(q)}`;
+                }
+            }
+        });
+    }
+
+    // Si la página contiene el contenedor de lista de resultados, ejecuta la búsqueda
+    const resultContainer = document.getElementById("listaResultados");
+    if (resultContainer) {
+        const params = new URLSearchParams(window.location.search);
+        const qParam = params.get("q") || "";
+        // Prefill del campo de búsqueda
+        if (input) input.value = qParam;
+        // Realiza la búsqueda y renderiza los resultados en el contenedor
+        if (qParam) {
+            realizarBusqueda(qParam, resultContainer);
+        }
+    }
 }
 
 async function realizarBusqueda(query, resultBox) {
@@ -76,8 +136,8 @@ async function realizarBusqueda(query, resultBox) {
             console.error("Busqueda error status:", res.status);
             renderizarResultados([], resultBox);
         }
-    } catch (e) { 
-        console.error("Busqueda fetch error:", e); 
+    } catch (e) {
+        console.error("Busqueda fetch error:", e);
         renderizarResultados([], resultBox);
     }
 }
