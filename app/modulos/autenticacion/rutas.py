@@ -1,3 +1,10 @@
+"""
+Docstring para app.modulos.autenticacion.rutas
+Módulo de rutas para autenticación de usuarios, incluyendo login con
+credenciales propias y con Google OAuth2.
+rutas significa que contiene endpoints (rutas) de la API.
+"""
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import select
@@ -87,6 +94,10 @@ async def login_google(data: TokenGoogle, session: AsyncSession = Depends(get_se
 
 
 async def get_current_user(token: str = Depends(oauth2_scheme), session: AsyncSession = Depends(get_session)):
+    """
+    Decodifica el JWT y obtiene el usuario actual. Verifica la versión del
+    token para validación distribuida.
+    """
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Credenciales inválidas",

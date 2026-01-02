@@ -2,66 +2,44 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Mensajería - RSCUA</title>
-    <link rel="stylesheet" href="css/HeaderStyle.css?v=1767070314">
-    <link rel="stylesheet" href="css/FeedStyle.css?v=1767070314">
-    <link rel="stylesheet" href="css/MensajeriaStyle.css?v=1767070314">
-    <link rel="stylesheet" href="css/PerfilStyle.css?v=1767070314">
-    <link rel="stylesheet" href="css/InterfaceChatstyle.css?v=1767070314">
+    <title>Mensajería - RSCUA_SD</title>
+    <link rel="stylesheet" href="css/HeaderStyle.css">
+    <link rel="stylesheet" href="css/FeedStyle.css">
+    <link rel="stylesheet" href="css/MensajeriaStyle.css">
+    <link rel="stylesheet" href="css/PerfilStyle.css">
+    <link rel="stylesheet" href="css/InterfaceChatstyle.css">
     <style>
-        body { padding-top: 80px; } 
+        body { padding-top: 80px; }
         .barra { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background: white; border-bottom: 1px solid #ddd; }
         .search-results { position: absolute; top: 45px; left:0; width: 100%; background: white; border: 1px solid #ccc; z-index: 2000; max-height: 300px; overflow-y: auto; display:none; border-radius: 0 0 5px 5px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body>
-    
     <div class="barra">
-        <button onclick="window.location.href='perfil.html'" title="Perfil">
-            <img src="imagenes/perfil.jpg" id="headerAvatar" alt="Perfil">
-        </button>
-        <button onclick="window.location.href='feed.html'" title="Inicio">
-            <img src="imagenes/inicio.jpg" alt="Inicio">
-        </button>
-        
-        <button class="btn-notificacion" onclick="window.location.href='notificaciones.html'" title="Notificaciones">
-            <img src="imagenes/notificaciones.png" alt="Notificaciones">
-            <span id="badgeNotis" class="badge">0</span>
-        </button>
-
-        <button onclick="window.location.href='comunidades.html'" title="Comunidades">
-            <img src="imagenes/comunidad.png" alt="Comunidades">
-        </button>
-
+        <button onclick="window.location.href='perfil.html'" title="Perfil"><img src="imagenes/perfil.jpg" id="headerAvatar" alt="Perfil"></button>
+        <button onclick="window.location.href='feed.html'" title="Inicio"><img src="imagenes/inicio.jpg" alt="Inicio"></button>
+        <button class="btn-notificacion" onclick="window.location.href='notificaciones.html'" title="Notificaciones"><img src="imagenes/notificaciones.png" alt="Notificaciones"><span id="badgeNotis" class="badge">0</span></button>
+        <button onclick="window.location.href='comunidades.html'" title="Comunidades"><img src="imagenes/comunidad.png" alt="Comunidades"></button>
         <div class="busqueda" style="position:relative;">
             <input type="text" placeholder="Buscar en RSCUA..." id="inputBusquedaGlobal">
             <button><img src="imagenes/busqueda.jpg" alt="Buscar"></button>
             <div id="searchResults" class="search-results"></div>
         </div>
-
         <button onclick="window.location.href='eventos.html'" title="Eventos"><img src="imagenes/IconoEvento.png" alt="Eventos"></button>
-        
-        <button onclick="window.location.href='mensajeria.html'" title="Mensajes">
-            <img src="imagenes/chats.png" alt="Mensajes">
-        </button>
-        
+        <button onclick="window.location.href='mensajeria.html'" title="Mensajes"><img src="imagenes/chats.png" alt="Mensajes"></button>
         <button onclick="window.location.href='configuracion.html'" title="Configuración"><img src="imagenes/configuracion.jpg" alt="Configuración"></button>
-
-        <button onclick="logout()" title="Cerrar Sesión">
-            <img src="imagenes/salida.jpg" alt="Salir">
-        </button>
+        <button onclick="logout()" title="Cerrar Sesión"><img src="imagenes/salida.jpg" alt="Salir"></button>
     </div>
-
-    
     <div class="comunidades" style="margin-top: 20px;">
         <h1>Mensajes Entrantes</h1>
         <div id="listaConversaciones"><p style="text-align:center">Cargando conversaciones...</p></div>
     </div>
-
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
-    <script src="js/mensajeria.js?v=1767070314"></script>
-    <script src="js/busqueda.js?v=1"></script>
-    <script>function logout(){ localStorage.clear(); window.location.href="login.html"; }</script>
-<script src="js/tema.js"></script>
+    <script src="js/mensajeria.js"></script>
+    <script src="js/busqueda.js"></script>
+    <script>
+        function logout() { localStorage.clear(); window.location.href = "login.html"; }
+    </script>
+    <script src="js/tema.js"></script>
 </body>
 </html>

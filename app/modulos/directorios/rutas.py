@@ -1,3 +1,12 @@
+"""
+Docstring para app.modulos.directorios.rutas
+Este archivo contiene las rutas (endpoints) relacionadas con el
+servicio de directorios de usuarios, permitiendo buscar usuarios
+y obtener perfiles públicos.
+Es muy importante, ya que facilita la interacción entre usuarios
+al permitirles encontrarse y ver información básica de otros usuarios.
+"""
+
 from typing import List, Union, Optional
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -17,7 +26,7 @@ class ResultadoBusqueda(BaseModel):
     subtitulo: str
     imagen: str = "imagenes/perfil.jpg"
 
-# DTO para Perfil Público (Sin password ni datos sensibles)
+# DTO para Perfil Público. 
 class PerfilPublico(BaseModel):
     username: str
     nombre: str

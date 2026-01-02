@@ -219,3 +219,33 @@ async def send_notification(sid, data):
             },
             room=dest_sid,
         )
+
+
+#SEÑALIZACIÓN P2P 
+@sio.event 
+async def p2p_signal(sid, data):
+    """
+    Maneja mensajes de señalización WebRTC para establecer conexiones
+    peer‑to‑peer entre clientes. El cliente emisor envía una señal que
+    contiene una oferta/answer SDP o un candidato ICE. El servidor
+    reenvía esta señal al destinatario correspondiente utilizando su
+    SID actual. No se persisten datos en la base de datos ya que la
+    negociación WebRTC es efímera.
+
+    Argumentos:
+        sid: Identificador de sesión del emisor.
+        data: Diccionario con los campos:
+            - origen: nombre de usuario de quien envía la señal
+            - destino: nombre de usuario del destinatario
+            - signal: objeto con la señal SDP o ICE
+    """
+    origen = data.get('origen')
+    destino = data.get('destino')
+    signal = data.get('signal')
+    if not destino or not signal:
+        return
+    # Buscar el SID del destinatario conectado
+    dest_sid = usuarios_conectados.get(destino)
+    if dest_sid:
+        # Reenviar la señal al destinatario con el nombre del emisor
+        await sio.emit('p2p_signal', {'origen': origen, 'signal': signal}, room=dest_sid)

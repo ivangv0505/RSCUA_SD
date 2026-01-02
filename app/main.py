@@ -1,3 +1,7 @@
+"""
+Archivo principal que inicializa la aplicación FastAPI, configura middlewares,
+rutas y el servidor Socket.IO.
+"""
 import os
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
