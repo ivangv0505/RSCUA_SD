@@ -1,10 +1,8 @@
 from typing import Optional, List, TYPE_CHECKING
 from sqlmodel import SQLModel, Field, Relationship
 from datetime import datetime
-
-if TYPE_CHECKING:
-    from app.modulos.publicaciones.modelos import Publicacion
-    from app.modulos.eventos.modelos import Evento
+from app.modulos.publicaciones.modelos import Publicacion
+from app.modulos.eventos.modelos import Evento
 
 class UsuarioBase(SQLModel):
     nombre: str
