@@ -1,8 +1,6 @@
-// Archivo feed.js modificado.  Maneja la carga y actualización del feed,
+// Maneja la carga y actualización del feed,
 // así como la lógica de notificaciones en el cliente.  Se ha modificado
 // el nombre del evento de notificación para escuchar "new_notification"
-// en lugar de "notification_received", lo que corrige la recepción de
-// notificaciones de likes y comentarios.
 
 const API_URL = "http://localhost:8000";
 let socket;
@@ -137,7 +135,7 @@ function renderizarPost(post, usuarioLogueado) {
         </div>`;
 }
 
-// --- LÓGICA DE COMENTARIOS ---
+// LÓGICA DE COMENTARIOS
 function toggleComentarios(id) {
     const sec = document.getElementById(`seccion-comentarios-${id}`);
     if (sec.style.display === 'block') {

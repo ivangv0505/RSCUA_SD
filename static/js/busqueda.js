@@ -125,6 +125,8 @@ function inicializarBusquedaPagina() {
 async function realizarBusqueda(query, resultBox) {
     const token = localStorage.getItem("token");
     try {
+        // Realiza la petición al backend
+        //un fetch es una función para hacer peticiones HTTP asincronas
         const res = await fetch(`${API_URL_SEARCH}/directorios/buscar?q=${encodeURIComponent(query)}`, {
             headers: { "Authorization": `Bearer ${token}` }
         });

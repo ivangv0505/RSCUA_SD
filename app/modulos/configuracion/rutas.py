@@ -1,3 +1,9 @@
+"""
+Docstring para app.modulos.configuracion.rutas
+Este archivo contiene las rutas (endpoints) relacionadas con la
+configuración de usuario, permitiendo obtener y actualizar las
+preferencias individuales.
+"""
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import select

@@ -1,5 +1,4 @@
 """
-Docstring para app.modulos.autenticacion.rutas
 Módulo de rutas para autenticación de usuarios, incluyendo login con
 credenciales propias y con Google OAuth2.
 rutas significa que contiene endpoints (rutas) de la API.
@@ -11,7 +10,7 @@ from sqlmodel import select
 from app.db import get_session
 from .modelos import Usuario, UsuarioUpdate, PasswordChange
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from jose import jwt, JWTError
+from jose import jwt, JWTError #jose es una librería para manejar JSON Web Tokens
 from datetime import datetime
 from pydantic import BaseModel
 import urllib.request
@@ -27,7 +26,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/token")
 class TokenGoogle(BaseModel):
     token: str
 
-# Función auxiliar para crear tokens nuestros
+#Función auxiliar para crear tokens 
 def create_jwt(user: Usuario):
     token_data = {"sub": user.username, "version": user.token_version}
     token = jwt.encode(token_data, SECRET_KEY, algorithm=ALGORITHM)
@@ -43,7 +42,7 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), session: Async
     
     return create_jwt(user)
 
-# NUEVO: LOGIN CON GOOGLE
+#LOGIN CON GOOGLE
 @router.post("/google")
 async def login_google(data: TokenGoogle, session: AsyncSession = Depends(get_session)):
     # 1. Validar token directamente con Google
@@ -115,7 +114,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme), session: AsyncSe
     
     if user is None: raise credentials_exception
     
-    # Validación distribuida
+    # Validación
     if getattr(user, "token_version", 1) != token_ver:
         raise HTTPException(status_code=401, detail="Sesión expirada")
         
@@ -125,6 +124,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme), session: AsyncSe
 async def read_users_me(current_user: Usuario = Depends(get_current_user)):
     return current_user
 
+# Actualizar datos del usuario autenticado
 @router.put("/me", response_model=Usuario)
 async def update_user_me(datos: UsuarioUpdate, current_user: Usuario = Depends(get_current_user), session: AsyncSession = Depends(get_session)):
     if datos.descripcion is not None: current_user.descripcion = datos.descripcion

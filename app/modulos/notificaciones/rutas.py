@@ -9,6 +9,7 @@ notificaciones de forma permanente.
 from typing import List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException
+#API ROUTER es para crear un conjunto de rutas agrupadas
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import select, desc
 from sqlalchemy.orm import selectinload

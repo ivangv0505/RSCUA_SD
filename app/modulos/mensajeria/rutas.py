@@ -14,7 +14,7 @@ router = APIRouter()
 class MensajeEdit(BaseModel):
     contenido: str
 
-# --- ORIGINAL DEL REPO (Para que funcione la carga) ---
+# ORIGINAL DEL REPO (Para que funcione la carga) 
 @router.get("/historial/{otro_username}")
 async def obtener_historial(otro_username: str, user: Usuario = Depends(get_current_user), session: AsyncSession = Depends(get_session)):
     q_otro = select(Usuario).where(Usuario.username == otro_username)
@@ -41,7 +41,7 @@ async def obtener_contactos(user: Usuario = Depends(get_current_user), session: 
     result = await session.execute(query)
     return result.scalars().all()
 
-# --- AGREGADOS PARA FUNCIONALIDAD (Sin romper lo anterior) ---
+#AGREGADOS PARA FUNCIONALIDAD
 @router.delete("/{mensaje_id}")
 async def eliminar_mensaje(mensaje_id: int, user: Usuario = Depends(get_current_user), session: AsyncSession = Depends(get_session)):
     mensaje = await session.get(Mensaje, mensaje_id)

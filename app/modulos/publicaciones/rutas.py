@@ -33,7 +33,7 @@ async def subir_imagen(file: UploadFile = File(...)):
 
 @router.post("/", response_model=PublicacionReadWithUser)
 async def crear_publicacion(post_in: PublicacionCreate, user: Usuario = Depends(get_current_user), session: AsyncSession = Depends(get_session)):
-    nueva_pub = Publicacion(**post_in.dict(), usuario_id=user.id)
+    nueva_pub = Publicacion(**post_in.model_dump(), usuario_id=user.id)
     session.add(nueva_pub)
     await session.commit()
     await session.refresh(nueva_pub)
@@ -117,7 +117,6 @@ async def listar_comentarios(id: int, session: AsyncSession = Depends(get_sessio
         ))
     return res
 
-# --- OTROS ---
 @router.delete("/{id}")
 async def eliminar_publicacion(id: int, user: Usuario = Depends(get_current_user), session: AsyncSession = Depends(get_session)):
     post = await session.get(Publicacion, id)

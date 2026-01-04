@@ -53,7 +53,7 @@ async def buscar_entidad(q: str, session: AsyncSession = Depends(get_session)):
         resultados.append(ResultadoBusqueda(tipo="POST", id=p.id, titulo=txt, subtitulo="Publicación"))
     return resultados
 
-# --- NUEVO: Obtener datos de perfil público ---
+#NUEVO: Obtener datos de perfil público
 @router.get("/perfil/{username}", response_model=PerfilPublico)
 async def obtener_perfil_publico(username: str, session: AsyncSession = Depends(get_session)):
     # Buscar usuario

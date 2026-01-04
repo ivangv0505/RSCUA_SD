@@ -60,7 +60,7 @@ async def disconnect(sid):
     print(f"Cliente desconectado: {sid}")
 
 
-# --- COMUNICACIÓN UNICAST (Chat Privado) ---
+# COMUNICACIÓN UNICAST (Chat Privado) 
 @sio.event
 async def send_message(sid, data):
     """
@@ -131,7 +131,7 @@ async def send_message(sid, data):
             await session.rollback()
 
 
-# --- COMUNICACIÓN BROADCAST (Difusión con ANTIFLOODING) ---
+# COMUNICACIÓN BROADCAST (Difusión con ANTIFLOODING)
 @sio.event
 async def broadcast_comunidad(sid, data):
     """
